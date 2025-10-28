@@ -21,3 +21,19 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# environment files
+.env
+.env.*.local
+
+# generated optimized images (build-time)
+/public/optimized/
+
+# editor / OS
+.vscode/
+.idea/
+.cache/
+Thumbs.db
+
+# logs
+*.log
