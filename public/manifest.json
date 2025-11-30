@@ -1,21 +1,21 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Wildan Arif",
+  "name": "Wildan Arif — Personal Profile",
   "icons": [
     {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+      "src": "logo.webp",
+      "sizes": "16x16 24x24 32x32 64x64",
+      "type": "image/webp"
     },
     {
-      "src": "logo192.png",
-      "type": "image/png",
-      "sizes": "192x192"
+      "src": "logo.webp",
+      "sizes": "192x192",
+      "type": "image/webp"
     },
     {
-      "src": "logo512.png",
-      "type": "image/png",
-      "sizes": "512x512"
+      "src": "logo.webp",
+      "sizes": "512x512",
+      "type": "image/webp"
     }
   ],
   "start_url": ".",
