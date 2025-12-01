@@ -1,32 +1,3 @@
-import React, { useState } from "react";
-import avatar1 from "../assets/images/nata.webp";
-import avatar2 from "../assets/images/dian.webp";
-import avatar3 from "../assets/images/dipha.webp";
-
-const testimonials = [
-  {
-    name: "Pranata Dewi Ratna Swari",
-    role: "Mahasiswa Sastra Indonesia",
-    quote:
-      '"Sangat proaktif memberikan insight dan solusi desain yang tepat. Eksekusinya cepat, rapi, dan hasilnya langsung bisa dipakai tanpa banyak revisi. Mantap!!"',
-    avatar: avatar1,
-  },
-  {
-    name: "Dian Agus S.",
-    role: "Mahasiswa Teknik Sipil",
-    quote:
-      '"Josjis bolo.... Kreatif, Landing page yang dibuatkan sangat efektif meningkatkan konversi produk PMW kami."',
-    avatar: avatar2,
-  },
-  {
-    name: "Arya Maulana P.",
-    role: "Mahasiswa Teknik Sipil",
-    quote:
-      '"memahami kebutuhan tim dan menjadikan desain yang menarik,dan komunikasi selalu ontime"',
-    avatar: avatar3,
-  },
-];
-
 function MobileCarousel({ testimonials }) {
   const [index, setIndex] = useState(0);
   const len = testimonials.length;
@@ -37,19 +8,18 @@ function MobileCarousel({ testimonials }) {
   return (
     <div className="relative flex items-center">
       {/* Carousel */}
-      <div className="overflow-hidden px-8 w-full">
+      <div className="overflow-hidden w-full">
         <div
           className="flex transition-transform duration-500 ease-in-out"
-          style={{ transform: `translateX(-${index * 100}%)` }}
+          style={{ transform: `translateX(-${index * 75}%)` }}
         >
           {testimonials.map((t, idx) => (
-            <div key={t.name + idx} className="w-full flex-shrink-0 px-4">
-              <div className="bg-white rounded-xl shadow-lg p-4 h-full flex flex-col max-w-[420px] w-[85%] mx-auto">
+            <div key={idx} className="w-[75%] flex-shrink-0 px-2">
+              <div className="bg-white rounded-xl shadow-lg p-4 h-full">
                 <div className="flex items-center gap-3">
                   <div className="p-0.5 rounded-full bg-gradient-to-tr from-sky-500 to-rose-400">
                     <img
                       src={t.avatar}
-                      alt={`${t.name} avatar`}
                       className="h-8 w-8 rounded-full object-cover"
                     />
                   </div>
@@ -62,80 +32,67 @@ function MobileCarousel({ testimonials }) {
                   </div>
                 </div>
 
-                <div className="mt-3 flex-1">
-                  <p className="text-slate-700 text-xs leading-relaxed">
-                    {t.quote}
-                  </p>
-                </div>
+                <p className="mt-3 text-slate-700 text-xs leading-relaxed">
+                  {t.quote}
+                </p>
               </div>
             </div>
           ))}
         </div>
       </div>
 
-      {/* Prev Button */}
+      {/* Prev / Next buttons — centered in gap */}
       <button
         onClick={prev}
-        aria-label="Previous testimonial"
         className="
-          absolute left-0 top-1/2 
-          -translate-y-1/2 -translate-x-1/2
+          absolute left-[8%] top-1/2 -translate-y-1/2
           w-10 h-10 rounded-full bg-white/95 shadow-md
           flex items-center justify-center
-          hover:bg-white hover:shadow-lg 
-          md:hidden
         "
       >
         <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-5 w-5 text-slate-700"
+          className="w-5 h-5 text-slate-700"
           fill="none"
-          viewBox="0 0 24 24"
           stroke="currentColor"
+          viewBox="0 0 24 24"
         >
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
-            strokeWidth={2}
+            strokeWidth="2"
             d="M15 19l-7-7 7-7"
           />
         </svg>
       </button>
 
-      {/* Next Button */}
       <button
         onClick={next}
-        aria-label="Next testimonial"
         className="
-          absolute right-0 top-1/2 
-          -translate-y-1/2 translate-x-1/2
+          absolute right-[8%] top-1/2 -translate-y-1/2
           w-10 h-10 rounded-full bg-white/95 shadow-md
           flex items-center justify-center
-          hover:bg-white hover:shadow-lg
-          md:hidden
         "
       >
         <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-5 w-5 text-slate-700"
+          className="w-5 h-5 text-slate-700"
           fill="none"
-          viewBox="0 0 24 24"
           stroke="currentColor"
+          viewBox="0 0 24 24"
         >
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
-            strokeWidth={2}
+            strokeWidth="2"
             d="M9 5l7 7-7 7"
           />
         </svg>
       </button>
 
-      {/* Indicators */}
+      {/* Indicator */}
       <div className="absolute bottom-[-22px] left-1/2 -translate-x-1/2 flex gap-2">
-        {testimonials.map((t, i) => (
-          <button
-            key={t.name}
+        {testimonials.map((_, i) => (
+          <div
+            key={i}
             onClick={() => setIndex(i)}
             className={`w-2 h-2 rounded-full ${
               i === index ? "bg-slate-800" : "bg-slate-300"
@@ -146,60 +103,3 @@ function MobileCarousel({ testimonials }) {
     </div>
   );
 }
-
-function TestimonialSection() {
-  return (
-    <section id="testimonials" className="py-16 px-6 bg-gray-50">
-      <div className="max-w-5xl mx-auto">
-        <div className="text-center mb-10">
-          <h2 className="text-2xl sm:text-3xl font-semibold text-slate-800">
-            Testimoni Klien
-          </h2>
-          <p className="text-sm text-slate-500 mt-2">
-            Apa kata mereka yang pernah bekerja sama dengan saya.
-          </p>
-        </div>
-
-        {/* Mobile */}
-        <div className="md:hidden">
-          <MobileCarousel testimonials={testimonials} />
-        </div>
-
-        {/* Desktop */}
-        <div className="hidden md:grid md:grid-cols-2 gap-8 items-stretch">
-          {testimonials.map((t, idx) => (
-            <div
-              key={t.name + idx}
-              className="bg-white rounded-xl shadow-lg p-6 sm:p-8 h-full flex flex-col"
-            >
-              <div className="flex items-center gap-4">
-                <div className="p-0.5 rounded-full bg-gradient-to-tr from-sky-500 to-rose-400">
-                  <img
-                    src={t.avatar}
-                    alt={`${t.name} avatar`}
-                    className="h-12 w-12 rounded-full object-cover"
-                  />
-                </div>
-
-                <div>
-                  <div className="text-sm font-semibold text-slate-800">
-                    {t.name}
-                  </div>
-                  <div className="text-xs text-slate-500">{t.role}</div>
-                </div>
-              </div>
-
-              <div className="mt-4 flex-1">
-                <p className="text-slate-700 text-sm sm:text-base leading-relaxed">
-                  {t.quote}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-export default TestimonialSection;
