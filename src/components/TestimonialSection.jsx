@@ -28,7 +28,6 @@ const testimonials = [
 ];
 
 function MobileCarousel({ testimonials }) {
-  // Carousel state + looping navigation
   const [index, setIndex] = useState(0);
   const len = testimonials.length;
 
@@ -36,12 +35,9 @@ function MobileCarousel({ testimonials }) {
   const prev = () => setIndex((i) => (i - 1 + len) % len);
 
   return (
-    <div className="relative">
-      {/*
-        Add horizontal padding around the carousel so the nav buttons can sit
-        consistently at the same distance from the content on mobile.
-      */}
-      <div className="overflow-hidden px-6 sm:px-8">
+    <div className="relative flex items-center">
+      {/* Carousel */}
+      <div className="overflow-hidden px-8 w-full">
         <div
           className="flex transition-transform duration-500 ease-in-out"
           style={{ transform: `translateX(-${index * 100}%)` }}
@@ -50,16 +46,12 @@ function MobileCarousel({ testimonials }) {
             <div key={t.name + idx} className="w-full flex-shrink-0 px-4">
               <div className="bg-white rounded-xl shadow-lg p-4 h-full flex flex-col max-w-[420px] w-[85%] mx-auto">
                 <div className="flex items-center gap-3">
-                  <div className="flex-shrink-0">
-                    <div className="p-0.5 rounded-full bg-gradient-to-tr from-sky-500 to-rose-400">
-                      <img
-                        src={t.avatar}
-                        alt={`${t.name} avatar`}
-                        className="h-8 w-8 rounded-full object-cover block"
-                        loading="lazy"
-                        decoding="async"
-                      />
-                    </div>
+                  <div className="p-0.5 rounded-full bg-gradient-to-tr from-sky-500 to-rose-400">
+                    <img
+                      src={t.avatar}
+                      alt={`${t.name} avatar`}
+                      className="h-8 w-8 rounded-full object-cover"
+                    />
                   </div>
 
                   <div>
@@ -81,14 +73,18 @@ function MobileCarousel({ testimonials }) {
         </div>
       </div>
 
-      {/* Nav buttons (mobile only) */}
-      {/* Left: Previous (aligned to container padding) */}
+      {/* Prev Button */}
       <button
-        type="button"
         onClick={prev}
         aria-label="Previous testimonial"
-        title="Previous testimonial"
-        className="absolute left-6 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-white/90 shadow-md flex items-center justify-center hover:bg-white hover:shadow-lg md:hidden"
+        className="
+          absolute left-0 top-1/2 
+          -translate-y-1/2 -translate-x-1/2
+          w-10 h-10 rounded-full bg-white/95 shadow-md
+          flex items-center justify-center
+          hover:bg-white hover:shadow-lg 
+          md:hidden
+        "
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -106,13 +102,18 @@ function MobileCarousel({ testimonials }) {
         </svg>
       </button>
 
-      {/* Right: Next (aligned to container padding) */}
+      {/* Next Button */}
       <button
-        type="button"
         onClick={next}
         aria-label="Next testimonial"
-        title="Next testimonial"
-        className="absolute right-6 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-white/90 shadow-md flex items-center justify-center hover:bg-white hover:shadow-lg md:hidden"
+        className="
+          absolute right-0 top-1/2 
+          -translate-y-1/2 translate-x-1/2
+          w-10 h-10 rounded-full bg-white/95 shadow-md
+          flex items-center justify-center
+          hover:bg-white hover:shadow-lg
+          md:hidden
+        "
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -131,12 +132,11 @@ function MobileCarousel({ testimonials }) {
       </button>
 
       {/* Indicators */}
-      <div className="flex items-center justify-center gap-2 mt-3">
+      <div className="absolute bottom-[-22px] left-1/2 -translate-x-1/2 flex gap-2">
         {testimonials.map((t, i) => (
           <button
             key={t.name}
             onClick={() => setIndex(i)}
-            aria-label={`Go to testimonial ${i + 1}`}
             className={`w-2 h-2 rounded-full ${
               i === index ? "bg-slate-800" : "bg-slate-300"
             }`}
@@ -160,12 +160,12 @@ function TestimonialSection() {
           </p>
         </div>
 
-        {/* Mobile carousel: shown only below md */}
+        {/* Mobile */}
         <div className="md:hidden">
           <MobileCarousel testimonials={testimonials} />
         </div>
 
-        {/* Desktop / tablet grid: keep existing look, unchanged */}
+        {/* Desktop */}
         <div className="hidden md:grid md:grid-cols-2 gap-8 items-stretch">
           {testimonials.map((t, idx) => (
             <div
@@ -173,16 +173,12 @@ function TestimonialSection() {
               className="bg-white rounded-xl shadow-lg p-6 sm:p-8 h-full flex flex-col"
             >
               <div className="flex items-center gap-4">
-                <div className="flex-shrink-0">
-                  <div className="p-0.5 rounded-full bg-gradient-to-tr from-sky-500 to-rose-400">
-                    <img
-                      src={t.avatar}
-                      alt={`${t.name} avatar`}
-                      className="h-12 w-12 rounded-full object-cover block"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  </div>
+                <div className="p-0.5 rounded-full bg-gradient-to-tr from-sky-500 to-rose-400">
+                  <img
+                    src={t.avatar}
+                    alt={`${t.name} avatar`}
+                    className="h-12 w-12 rounded-full object-cover"
+                  />
                 </div>
 
                 <div>
