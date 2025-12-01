@@ -11,7 +11,7 @@ const testimonials = [
     name: "Pranata Dewi Ratna Swari",
     role: "Mahasiswa Sastra Indonesia",
     quote:
-      "Sangat proaktif memberikan insight dan solusi desain yang tepat. Eksekusinya cepat, rapi, dan hasilnya langsung bisa dipakai tanpa banyak revisi. Mantap!!",
+      "Orggnya enak diajak diskusi, kasih insight yg kepikiran bgt n desainnya rapi jg. Kerjanya cepat tapi tetap detail, jadi jarang bgt perlu revisi. Keren banget sih!",
     avatar: avatar1,
   },
   {
@@ -24,8 +24,7 @@ const testimonials = [
   {
     name: "Arya Maulana P.",
     role: "Mahasiswa Teknik Sipil",
-    quote:
-      "Memahami kebutuhan tim dan menghasilkan desain yang menarik, serta komunikasi selalu ontime.",
+    quote: "mantap wil... desain menarik, komunikasi jg selalu ontime.",
     avatar: avatar3,
   },
 ];
