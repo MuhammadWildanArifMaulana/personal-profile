@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
+
+// --- ASSETS ---
 import avatar1 from "../assets/images/nata.webp";
 import avatar2 from "../assets/images/dian.webp";
 import avatar3 from "../assets/images/dipha.webp";
 
+// --- DATA ---
 const testimonials = [
   {
     name: "Pranata Dewi Ratna Swari",
@@ -27,158 +30,217 @@ const testimonials = [
   },
 ];
 
-/* ---------------------------------------------------
-   REUSABLE CARD COMPONENT
----------------------------------------------------- */
-function TestimonialCard({ name, role, quote, avatar }) {
+/* ==========================================================================
+   COMPONENT: NAV BUTTON
+   ========================================================================== */
+function NavButton({ direction, onClick, disabled }) {
   return (
-    <div className="bg-white rounded-xl shadow-md p-6 md:p-7 flex flex-col h-full w-full">
-      <div className="flex items-center gap-4">
-        <div className="p-0.5 rounded-full bg-gradient-to-tr from-sky-500 to-rose-400">
-          <img
-            src={avatar}
-            alt={name}
-            className="h-12 w-12 sm:h-14 sm:w-14 rounded-full object-cover"
-          />
-        </div>
-
-        <div>
-          <h4 className="text-base font-semibold text-slate-800">{name}</h4>
-          <p className="text-sm text-slate-500">{role}</p>
-        </div>
-      </div>
-
-      <p className="text-sm sm:text-base text-slate-700 leading-relaxed mt-4 flex-1">
-        {quote}
-      </p>
-    </div>
-  );
-}
-
-/* ---------------------------------------------------
-   MOBILE/TABLET CAROUSEL (<= LG)
----------------------------------------------------- */
-function TestimonialCarousel({ items }) {
-  const [index, setIndex] = useState(0);
-  const len = items.length;
-
-  const next = () => setIndex((i) => (i + 1) % len);
-  const prev = () => setIndex((i) => (i - 1 + len) % len);
-
-  // Optional autoplay (6 detik)
-  useEffect(() => {
-    const timer = setInterval(next, 6000);
-    return () => clearInterval(timer);
-  }, [index]);
-
-  return (
-    <div className="relative w-full">
-      {/* SLIDER */}
-      <div className="overflow-hidden">
-        <div
-          className="flex transition-transform duration-500 ease-in-out"
-          style={{ transform: `translateX(-${index * 100}%)` }}
-        >
-          {items.map((t, idx) => (
-            <div key={idx} className="w-full flex-shrink-0 px-4">
-              <TestimonialCard {...t} />
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* PREV BUTTON */}
-      <button
-        onClick={prev}
-        aria-label="Previous"
-        className="
-          absolute left-2 top-1/2 -translate-y-1/2
-          w-10 h-10 rounded-full bg-white border border-slate-200
-          shadow-sm flex items-center justify-center
-          hover:shadow-md active:scale-95 lg:hidden
-        "
-      >
+    <button
+      onClick={onClick}
+      disabled={disabled}
+      className={`group w-12 h-12 rounded-full border border-slate-200 bg-white text-slate-600 
+                 flex items-center justify-center shadow-sm transition-all duration-300
+                 ${
+                   disabled
+                     ? "opacity-50 cursor-not-allowed"
+                     : "hover:bg-slate-900 hover:text-white hover:border-slate-900 active:scale-95"
+                 }`}
+      aria-label={direction === "left" ? "Previous" : "Next"}
+    >
+      {direction === "left" ? (
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="h-5 w-5 text-slate-700"
           fill="none"
           viewBox="0 0 24 24"
-          strokeWidth="2"
+          strokeWidth={2}
           stroke="currentColor"
+          className="w-5 h-5 group-hover:-translate-x-0.5 transition-transform"
         >
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
-            d="M15 19l-7-7 7-7"
+            d="M15.75 19.5L8.25 12l7.5-7.5"
           />
         </svg>
-      </button>
-
-      {/* NEXT BUTTON */}
-      <button
-        onClick={next}
-        aria-label="Next"
-        className="
-          absolute right-2 top-1/2 -translate-y-1/2
-          w-10 h-10 rounded-full bg-white border border-slate-200
-          shadow-sm flex items-center justify-center
-          hover:shadow-md active:scale-95 lg:hidden
-        "
-      >
+      ) : (
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="h-5 w-5 text-slate-700"
           fill="none"
           viewBox="0 0 24 24"
-          strokeWidth="2"
+          strokeWidth={2}
           stroke="currentColor"
+          className="w-5 h-5 group-hover:translate-x-0.5 transition-transform"
         >
-          <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-        </svg>
-      </button>
-
-      {/* INDICATORS */}
-      <div className="flex justify-center gap-2 mt-4 lg:hidden">
-        {items.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => setIndex(i)}
-            className={`w-2.5 h-2.5 rounded-full transition-all ${
-              i === index ? "bg-slate-800 scale-125" : "bg-slate-300"
-            }`}
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M8.25 4.5l7.5 7.5-7.5 7.5"
           />
-        ))}
+        </svg>
+      )}
+    </button>
+  );
+}
+
+/* ==========================================================================
+   COMPONENT: TESTIMONIAL CARD
+   ========================================================================== */
+function TestimonialCard({ name, role, quote, avatar }) {
+  return (
+    <div className="h-full bg-white border border-slate-100 rounded-2xl p-6 md:p-8 shadow-[0_4px_20px_rgb(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] flex flex-col transition-all duration-300">
+      <div className="flex items-center gap-4 mb-6">
+        <div className="p-0.5 rounded-full bg-gradient-to-tr from-sky-400 to-rose-400 shrink-0">
+          <img
+            src={avatar}
+            alt={name}
+            className="h-14 w-14 rounded-full object-cover border-2 border-white"
+          />
+        </div>
+        <div>
+          <h4 className="text-base font-bold text-slate-800 line-clamp-1">
+            {name}
+          </h4>
+          <p className="text-xs md:text-sm text-slate-500 font-medium line-clamp-1">
+            {role}
+          </p>
+        </div>
       </div>
+      <blockquote className="text-slate-600 leading-relaxed text-sm md:text-base flex-1">
+        "{quote}"
+      </blockquote>
     </div>
   );
 }
 
-/* ---------------------------------------------------
-   FINAL SECTION (GRID DESKTOP + CAROUSEL MOBILE)
----------------------------------------------------- */
+/* ==========================================================================
+   MAIN SECTION
+   ========================================================================== */
 export default function TestimonialSection() {
+  const scrollRef = useRef(null);
+  const [activeIndex, setActiveIndex] = useState(0); // State untuk melacak card mana yang aktif
+
+  // --- LOGIKA UPDATE INDIKATOR SAAT SCROLL ---
+  const handleScroll = () => {
+    if (scrollRef.current) {
+      const { scrollLeft, clientWidth } = scrollRef.current;
+
+      // Rumus: Cari tahu kita ada di card nomor berapa.
+      // bagi posisi scroll saat ini dengan lebar perkiraan satu card.
+      // Mobile width factor ~0.85 (85vw), Desktop ~400px.
+
+      const isMobile = window.innerWidth < 768;
+      const cardWidth = isMobile ? window.innerWidth * 0.85 : 432; // 400 + 32 gap
+
+      // Math.round agar saat digeser >50% dia pindah index
+      const newIndex = Math.round(scrollLeft / cardWidth);
+
+      // Pastikan index tidak minus atau melebihi jumlah data
+      const clampedIndex = Math.min(
+        Math.max(newIndex, 0),
+        testimonials.length - 1
+      );
+
+      setActiveIndex(clampedIndex);
+    }
+  };
+
+  // --- LOGIKA TOMBOL NAVIGASI ---
+  const scroll = (direction) => {
+    const { current } = scrollRef;
+    if (current) {
+      const isMobile = window.innerWidth < 768;
+      const cardWidth = isMobile ? window.innerWidth * 0.85 + 16 : 432; // +16/32 untuk gap
+
+      // Jika tombol ditekan, update activeIndex manual agar indikator langsung gerak
+      let newIndex = activeIndex;
+      if (direction === "left") newIndex = Math.max(0, activeIndex - 1);
+      else newIndex = Math.min(testimonials.length - 1, activeIndex + 1);
+
+      setActiveIndex(newIndex); // Update state indikator
+
+      // Scroll container ke posisi yang tepat
+      current.scrollTo({
+        left: newIndex * cardWidth,
+        behavior: "smooth",
+      });
+    }
+  };
+
   return (
-    <section id="testimonials" className="py-16 px-6 bg-gray-50">
-      <div className="max-w-5xl mx-auto">
-        <div className="text-center mb-12">
-          <h2 className="text-2xl sm:text-3xl font-semibold text-slate-800">
-            Testimoni Klien
-          </h2>
-          <p className="text-sm text-slate-500 mt-2">
-            Apa kata mereka setelah bekerja sama dengan saya.
-          </p>
+    <section className="py-16 md:py-24 bg-gray-50 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-5 relative">
+        {/* HEADER */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 md:mb-12 gap-6">
+          <div className="max-w-2xl text-center md:text-left mx-auto md:mx-0">
+            <h2 className="text-2xl md:text-4xl font-bold text-slate-900 mb-3">
+              Kata Mereka Tentang Karya Saya
+            </h2>
+            <p className="text-slate-500 text-sm md:text-lg">
+              Feedback jujur dari kolaborasi yang telah terjalin.
+            </p>
+          </div>
+
+          {/* DESKTOP NAV */}
+          <div className="hidden md:flex gap-3">
+            <NavButton
+              direction="left"
+              onClick={() => scroll("left")}
+              disabled={activeIndex === 0}
+            />
+            <NavButton
+              direction="right"
+              onClick={() => scroll("right")}
+              disabled={activeIndex === testimonials.length - 1}
+            />
+          </div>
         </div>
 
-        {/* MOBILE + TABLET (SLIDER) */}
-        <div className="lg:hidden">
-          <TestimonialCarousel items={testimonials} />
-        </div>
-
-        {/* DESKTOP GRID */}
-        <div className="hidden lg:grid lg:grid-cols-2 gap-8">
+        {/* SLIDER CONTAINER */}
+        <div
+          ref={scrollRef}
+          onScroll={handleScroll} // EVENT LISTENER: Ini kuncinya agar indikator gerak saat discroll
+          className="flex gap-4 md:gap-8 overflow-x-auto snap-x snap-mandatory pb-4 scroll-smooth"
+          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+        >
           {testimonials.map((t, idx) => (
-            <TestimonialCard key={idx} {...t} />
+            <div
+              key={idx}
+              className="snap-center shrink-0 w-[85vw] sm:w-[350px] md:w-[400px]"
+            >
+              <TestimonialCard {...t} />
+            </div>
           ))}
+          {/* Spacer kanan (mobile only) */}
+          <div className="w-4 shrink-0 md:hidden" />
+        </div>
+
+        {/* --- MOBILE CONTROL BAR (Posisi Bawah) --- */}
+        <div className="flex md:hidden justify-center items-center gap-6 mt-6">
+          <NavButton
+            direction="left"
+            onClick={() => scroll("left")}
+            disabled={activeIndex === 0}
+          />
+
+          {/* DYNAMIC INDICATOR */}
+          {/* Lebar container fixed (misal w-16). Isi dalamnya dinamis. */}
+          <div className="h-1.5 w-16 bg-slate-200 rounded-full overflow-hidden relative">
+            <div
+              className="h-full bg-slate-800 rounded-full transition-all duration-300 ease-out"
+              style={{
+                // Lebar batang gelap = 100% dibagi jumlah card (misal 3 card = 33%)
+                width: `${100 / testimonials.length}%`,
+                // Posisi geser = index aktif * 100% (relatif terhadap lebarnya sendiri)
+                transform: `translateX(${activeIndex * 100}%)`,
+              }}
+            />
+          </div>
+
+          <NavButton
+            direction="right"
+            onClick={() => scroll("right")}
+            disabled={activeIndex === testimonials.length - 1}
+          />
         </div>
       </div>
     </section>
