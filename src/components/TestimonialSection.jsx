@@ -11,7 +11,7 @@ const testimonials = [
     name: "Pranata Dewi Ratna Swari",
     role: "Mahasiswa Sastra Indonesia",
     quote:
-      "Orggnya enak diajak diskusi, kasih insight yg kepikiran bgt n desainnya rapi jg. Kerjanya cepat tapi tetap detail, jadi jarang bgt perlu revisi. Keren banget sih!",
+      "Orgnya enak diajak diskusi, kasih insight yg kepikiran bgt n desainnya rapi jg. Kerjanya cepat tapi tetap detail, jadi jarang bgt perlu revisi. Keren banget sih!",
     avatar: avatar1,
   },
   {
