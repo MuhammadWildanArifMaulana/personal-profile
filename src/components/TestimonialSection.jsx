@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState } from "react";
 
 // --- ASSETS ---
 import avatar1 from "../assets/images/nata.webp";
@@ -117,24 +117,18 @@ function TestimonialCard({ name, role, quote, avatar }) {
    ========================================================================== */
 export default function TestimonialSection() {
   const scrollRef = useRef(null);
-  const [activeIndex, setActiveIndex] = useState(0); // State untuk melacak card mana yang aktif
+  const [activeIndex, setActiveIndex] = useState(0);
 
   // --- LOGIKA UPDATE INDIKATOR SAAT SCROLL ---
   const handleScroll = () => {
     if (scrollRef.current) {
-      const { scrollLeft, clientWidth } = scrollRef.current;
-
-      // Rumus: Cari tahu kita ada di card nomor berapa.
-      // bagi posisi scroll saat ini dengan lebar perkiraan satu card.
-      // Mobile width factor ~0.85 (85vw), Desktop ~400px.
+      const { scrollLeft } = scrollRef.current;
 
       const isMobile = window.innerWidth < 768;
-      const cardWidth = isMobile ? window.innerWidth * 0.85 : 432; // 400 + 32 gap
+      const cardWidth = isMobile ? window.innerWidth * 0.85 : 432;
 
-      // Math.round agar saat digeser >50% dia pindah index
       const newIndex = Math.round(scrollLeft / cardWidth);
 
-      // Pastikan index tidak minus atau melebihi jumlah data
       const clampedIndex = Math.min(
         Math.max(newIndex, 0),
         testimonials.length - 1
@@ -147,18 +141,17 @@ export default function TestimonialSection() {
   // --- LOGIKA TOMBOL NAVIGASI ---
   const scroll = (direction) => {
     const { current } = scrollRef;
+
     if (current) {
       const isMobile = window.innerWidth < 768;
-      const cardWidth = isMobile ? window.innerWidth * 0.85 + 16 : 432; // +16/32 untuk gap
+      const cardWidth = isMobile ? window.innerWidth * 0.85 + 16 : 432;
 
-      // Jika tombol ditekan, update activeIndex manual agar indikator langsung gerak
       let newIndex = activeIndex;
       if (direction === "left") newIndex = Math.max(0, activeIndex - 1);
       else newIndex = Math.min(testimonials.length - 1, activeIndex + 1);
 
-      setActiveIndex(newIndex); // Update state indikator
+      setActiveIndex(newIndex);
 
-      // Scroll container ke posisi yang tepat
       current.scrollTo({
         left: newIndex * cardWidth,
         behavior: "smooth",
@@ -180,7 +173,6 @@ export default function TestimonialSection() {
             </p>
           </div>
 
-          {/* DESKTOP NAV */}
           <div className="hidden md:flex gap-3">
             <NavButton
               direction="left"
@@ -195,10 +187,10 @@ export default function TestimonialSection() {
           </div>
         </div>
 
-        {/* SLIDER CONTAINER */}
+        {/* SLIDER */}
         <div
           ref={scrollRef}
-          onScroll={handleScroll} // EVENT LISTENER: Ini kuncinya agar indikator gerak saat discroll
+          onScroll={handleScroll}
           className="flex gap-4 md:gap-8 overflow-x-auto snap-x snap-mandatory pb-4 scroll-smooth"
           style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
         >
@@ -210,32 +202,25 @@ export default function TestimonialSection() {
               <TestimonialCard {...t} />
             </div>
           ))}
-          {/* Spacer kanan (mobile only) */}
           <div className="w-4 shrink-0 md:hidden" />
         </div>
 
-        {/* --- MOBILE CONTROL BAR (Posisi Bawah) --- */}
+        {/* MOBILE CONTROL */}
         <div className="flex md:hidden justify-center items-center gap-6 mt-6">
           <NavButton
             direction="left"
             onClick={() => scroll("left")}
             disabled={activeIndex === 0}
           />
-
-          {/* DYNAMIC INDICATOR */}
-          {/* Lebar container fixed (misal w-16). Isi dalamnya dinamis. */}
           <div className="h-1.5 w-16 bg-slate-200 rounded-full overflow-hidden relative">
             <div
               className="h-full bg-slate-800 rounded-full transition-all duration-300 ease-out"
               style={{
-                // Lebar batang gelap = 100% dibagi jumlah card (misal 3 card = 33%)
                 width: `${100 / testimonials.length}%`,
-                // Posisi geser = index aktif * 100% (relatif terhadap lebarnya sendiri)
                 transform: `translateX(${activeIndex * 100}%)`,
               }}
             />
           </div>
-
           <NavButton
             direction="right"
             onClick={() => scroll("right")}
