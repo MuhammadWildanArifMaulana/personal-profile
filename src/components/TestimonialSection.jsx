@@ -5,7 +5,7 @@ import avatar3 from "../assets/images/dipha.webp";
 
 const testimonials = [
   {
-    name: "Pranata Dewi anjaii",
+    name: "Pranata Dewi Ratna Swari",
     role: "Mahasiswa Sastra Indonesia",
     quote:
       '"Sangat proaktif memberikan insight dan solusi desain yang tepat. Eksekusinya cepat, rapi, dan hasilnya langsung bisa dipakai tanpa banyak revisi. Mantap!!"',
