@@ -1,28 +1,28 @@
 import React, { useState } from "react";
-import avatar1 from "../assets/images/dipha.webp";
+import avatar1 from "../assets/images/nata.webp";
 import avatar2 from "../assets/images/dian.webp";
-import avatar3 from "../assets/images/nata.webp";
+import avatar3 from "../assets/images/dipha.webp";
 
 const testimonials = [
   {
-    name: "Arya Maulana P.",
-    role: "Mahasiswa Teknik Sipil",
+    name: "Pranata Dewi anjaii",
+    role: "Mahasiswa Sastra Indonesia",
     quote:
-      '"mampu memahami kebutuhan tim kami dan menerjemahkannya menjadi desain yang sangat user-friendly. Komunikasi dan delivery selalu on time!"',
+      '"Sangat proaktif memberikan insight dan solusi desain yang tepat. Eksekusinya cepat, rapi, dan hasilnya langsung bisa dipakai tanpa banyak revisi. Mantap!!"',
     avatar: avatar1,
   },
   {
     name: "Dian Agus S.",
     role: "Mahasiswa Teknik Sipil",
     quote:
-      '"Kreativitas & kecepatan kerja luar biasa. Landing page yang dibuatkan sangat modern & efektif meningkatkan konversi produk kami."',
+      '"Josjis bolo.... Kreatif, Landing page yang dibuatkan sangat efektif meningkatkan konversi produk PMW kami."',
     avatar: avatar2,
   },
   {
-    name: "Pranata Dewi anjaii",
-    role: "Mahasiswa Sastra Indonesia",
+    name: "Arya Maulana P.",
+    role: "Mahasiswa Teknik Sipil",
     quote:
-      '"Sangat proaktif memberikan insight dan solusi desain yang tepat sasaran. Eksekusinya cepat, rapi, dan hasilnya langsung bisa kami pakai tanpa banyak revisi. Sangat puas dengan profesionalismenya."',
+      '"memahami kebutuhan tim dan menjadikan desain yang menarik,dan komunikasi selalu ontime"',
     avatar: avatar3,
   },
 ];
@@ -37,14 +37,18 @@ function MobileCarousel({ testimonials }) {
 
   return (
     <div className="relative">
-      <div className="overflow-hidden">
+      {/*
+        Add horizontal padding around the carousel so the nav buttons can sit
+        consistently at the same distance from the content on mobile.
+      */}
+      <div className="overflow-hidden px-6 sm:px-8">
         <div
           className="flex transition-transform duration-500 ease-in-out"
           style={{ transform: `translateX(-${index * 100}%)` }}
         >
           {testimonials.map((t, idx) => (
             <div key={t.name + idx} className="w-full flex-shrink-0 px-4">
-              <div className="bg-white rounded-xl shadow-lg p-4 h-full flex flex-col w-[75%] mx-auto">
+              <div className="bg-white rounded-xl shadow-lg p-4 h-full flex flex-col max-w-[420px] w-[85%] mx-auto">
                 <div className="flex items-center gap-3">
                   <div className="flex-shrink-0">
                     <div className="p-0.5 rounded-full bg-gradient-to-tr from-sky-500 to-rose-400">
@@ -78,16 +82,17 @@ function MobileCarousel({ testimonials }) {
       </div>
 
       {/* Nav buttons (mobile only) */}
+      {/* Left: Previous (aligned to container padding) */}
       <button
         type="button"
-        onClick={next}
-        aria-label="Next testimonial"
-        title="Next testimonial"
-        className="absolute left-[6%] top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full bg-white/80 shadow-sm flex items-center justify-center hover:bg-white hover:shadow-md md:hidden"
+        onClick={prev}
+        aria-label="Previous testimonial"
+        title="Previous testimonial"
+        className="absolute left-6 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-white/90 shadow-md flex items-center justify-center hover:bg-white hover:shadow-lg md:hidden"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="h-4 w-4 text-slate-700"
+          className="h-5 w-5 text-slate-700"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -101,16 +106,17 @@ function MobileCarousel({ testimonials }) {
         </svg>
       </button>
 
+      {/* Right: Next (aligned to container padding) */}
       <button
         type="button"
-        onClick={prev}
-        aria-label="Previous testimonial"
-        title="Previous testimonial"
-        className="absolute right-[6%] top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full bg-white/80 shadow-sm flex items-center justify-center hover:bg-white hover:shadow-md md:hidden"
+        onClick={next}
+        aria-label="Next testimonial"
+        title="Next testimonial"
+        className="absolute right-6 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-white/90 shadow-md flex items-center justify-center hover:bg-white hover:shadow-lg md:hidden"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="h-4 w-4 text-slate-700"
+          className="h-5 w-5 text-slate-700"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
