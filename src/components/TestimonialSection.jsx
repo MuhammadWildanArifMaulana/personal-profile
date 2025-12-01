@@ -12,18 +12,18 @@ const testimonials = [
     avatar: avatar1,
   },
   {
-    name: "Pranata Dewi anjaii",
-    role: "Mahasiswa Sastra Indonesia",
-    quote:
-      '"Sangat proaktif memberikan insight dan solusi desain yang tepat sasaran. Eksekusinya cepat, rapi, dan hasilnya langsung bisa kami pakai tanpa banyak revisi. Sangat puas dengan profesionalismenya."',
-    avatar: avatar3,
-  },
-  {
     name: "Dian Agus S.",
     role: "Mahasiswa Teknik Sipil",
     quote:
       '"Kreativitas & kecepatan kerja luar biasa. Landing page yang dibuatkan sangat modern & efektif meningkatkan konversi produk kami."',
     avatar: avatar2,
+  },
+  {
+    name: "Pranata Dewi anjaii",
+    role: "Mahasiswa Sastra Indonesia",
+    quote:
+      '"Sangat proaktif memberikan insight dan solusi desain yang tepat sasaran. Eksekusinya cepat, rapi, dan hasilnya langsung bisa kami pakai tanpa banyak revisi. Sangat puas dengan profesionalismenya."',
+    avatar: avatar3,
   },
 ];
 
