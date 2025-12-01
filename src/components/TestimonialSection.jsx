@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import avatar1 from "../assets/images/dipha.webp";
 import avatar2 from "../assets/images/dian.webp";
+import avatar3 from "../assets/images/nata.webp";
 
 const testimonials = [
   {
@@ -9,6 +10,13 @@ const testimonials = [
     quote:
       '"mampu memahami kebutuhan tim kami dan menerjemahkannya menjadi desain yang sangat user-friendly. Komunikasi dan delivery selalu on time!"',
     avatar: avatar1,
+  },
+  {
+    name: "Pranata Dewi anjaii",
+    role: "Mahasiswa Sastra Indonesia",
+    quote:
+      '"Sangat proaktif memberikan insight dan solusi desain yang tepat sasaran. Eksekusinya cepat, rapi, dan hasilnya langsung bisa kami pakai tanpa banyak revisi. Sangat puas dengan profesionalismenya."',
+    avatar: avatar3,
   },
   {
     name: "Dian Agus S.",
